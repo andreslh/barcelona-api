@@ -1,28 +1,58 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Tableproduct extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
+  const Tableproduct = sequelize.define(
+    'Tableproduct',
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      productId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Product',
+          key: 'id',
+          as: 'productId',
+        },
+      },
+      tableId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Table',
+          key: 'id',
+          as: 'tableId',
+        },
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.NUMBER,
+        allowNull: false,
+      },
+      total: {
+        type: DataTypes.NUMBER,
+        allowNull: false,
+      },
+    },
+    {}
+  );
+  Tableproduct.associate = function (models) {
+    Tableproduct.belongsTo(models.Product, {
+      foreignKey: 'productId',
+      onDelete: 'CASCADE',
+    });
+    Tableproduct.belongsTo(models.Table, {
+      foreignKey: 'tableId',
+      onDelete: 'CASCADE',
+    });
   };
-  Tableproduct.init({
-    productId: DataTypes.INTEGER,
-    tableId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    quantity: DataTypes.INTEGER,
-    price: DataTypes.NUMBER,
-    total: DataTypes.NUMBER
-  }, {
-    sequelize,
-    modelName: 'Tableproduct',
-  });
   return Tableproduct;
 };
