@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../server.js');
+const app = require('../src/index.js');
 
 describe('Categories API', () => {
   it('should create a new category', async () => {
