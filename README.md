@@ -1,2 +1,2 @@
-# barcelona-api
+# Barcelona API
 Express API
