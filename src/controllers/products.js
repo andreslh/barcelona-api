@@ -44,9 +44,40 @@ const post = async (req, res) => {
   }
 };
 
+const put = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.update(
+      { ...req.body },
+      { where: { id: id } }
+    );
+    if (product) {
+      return res.sendStatus(200);
+    }
+    throw new Error('Product not found');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+const remove = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Product.destroy({ where: { id: id } });
+    if (deleted) {
+      return res.status(204).send('Product deleted');
+    }
+    throw new Error('Product not found');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   get,
   getList,
   getById,
   post,
+  put,
+  remove,
 };

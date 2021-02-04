@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "test:watch": "cross-env NODE_ENV=test jest --watch --testTimeout=10000",
     "pretest": "cross-env NODE_ENV=test npm run db:reset",
     "db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:create",
     "start": "nodemon src/index.js",
@@ -17,6 +18,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-validator": "^6.9.2",
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
     "sequelize": "^6.5.0"

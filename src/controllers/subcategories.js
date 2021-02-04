@@ -36,8 +36,39 @@ const post = async (req, res) => {
   }
 };
 
+const put = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const subcategory = await Subcategory.update(
+      { ...req.body },
+      { where: { id: id } }
+    );
+    if (subcategory) {
+      return res.sendStatus(200);
+    }
+    throw new Error('Subcategory not found');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+const remove = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Subcategory.destroy({ where: { id: id } });
+    if (deleted) {
+      return res.status(204).send('Subcategory deleted');
+    }
+    throw new Error('Subcategory not found');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   get,
   getById,
   post,
+  put,
+  remove,
 };
