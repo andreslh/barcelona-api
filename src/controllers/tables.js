@@ -84,7 +84,7 @@ const complete = async (req, res) => {
   }
 };
 
-const postProducts = async (req, res) => {
+const addProducts = async (req, res) => {
   const { id } = req.params;
   const tableId = parseInt(id, 10);
 
@@ -92,7 +92,7 @@ const postProducts = async (req, res) => {
     const { total } = await Table.findOne({ where: { id } });
     let updatedTotal = parseFloat(total, 10);
 
-    const tableProducts = await TableProduct.bulkCreate(
+    const tableProducts = await Tableproduct.bulkCreate(
       await Promise.all(
         req.body.map(async (tableProduct) => {
           const quantity = parseInt(tableProduct.quantity, 10);
@@ -116,8 +116,8 @@ const postProducts = async (req, res) => {
 
     await Table.update({ total: updatedTotal }, { where: { id } });
     res.send(tableProducts);
-  } catch {
-    return res.sendStatus(500);
+  } catch (error) {
+    return res.status(500).send(error.message);
   }
 };
 
@@ -126,14 +126,12 @@ const removeProduct = async (req, res) => {
   const t = await sequelize.transaction();
 
   try {
-    const product = await TableProduct.findOne({
+    const product = await Tableproduct.findOne({
       where: { id: productTableId },
     });
     const { total } = product;
-    await TableProduct.destroy(
-      {
-        where: { id: productTableId },
-      },
+    await Tableproduct.destroy(
+      { where: { id: productTableId } },
       { transaction: t }
     );
 
@@ -151,7 +149,7 @@ const removeProduct = async (req, res) => {
     res.sendStatus(200);
   } catch (error) {
     await t.rollback();
-    res.sendStatus(500);
+    return res.status(500).send(error.message);
   }
 };
 
@@ -161,8 +159,8 @@ module.exports = {
   getOpen,
   getCompleted,
   post,
-  postProducts,
   remove,
   complete,
+  addProducts,
   removeProduct,
 };
