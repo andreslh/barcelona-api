@@ -57,7 +57,7 @@ const remove = async (req, res) => {
     const { id } = req.params;
     const deleted = await Subcategory.destroy({ where: { id: id } });
     if (deleted) {
-      return res.status(204).send('Subcategory deleted');
+      return res.status(204).send();
     }
     throw new Error('Subcategory not found');
   } catch (error) {

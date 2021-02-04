@@ -13,7 +13,7 @@ module.exports = {
         {
           name: 'Facundo',
           total: 510,
-          status: true,
+          status: false,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

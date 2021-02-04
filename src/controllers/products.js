@@ -65,7 +65,7 @@ const remove = async (req, res) => {
     const { id } = req.params;
     const deleted = await Product.destroy({ where: { id: id } });
     if (deleted) {
-      return res.status(204).send('Product deleted');
+      return res.status(204).send();
     }
     throw new Error('Product not found');
   } catch (error) {

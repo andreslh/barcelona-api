@@ -72,7 +72,7 @@ const remove = async (req, res) => {
     const { id } = req.params;
     const deleted = await Table.destroy({ where: { id: id } });
     if (deleted) {
-      return res.status(204).send('Table deleted');
+      return res.status(204).send();
     }
     throw new Error('Table not found');
   } catch (error) {
