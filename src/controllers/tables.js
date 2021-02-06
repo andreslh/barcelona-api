@@ -45,8 +45,16 @@ const getCompleted = async (req, res) => {
   }
 };
 
+const isNameRepeated = async (name) =>
+  (await Table.findOne({ where: { name, status: true } })) ? true : false;
+
 const post = async (req, res) => {
   try {
+    const isRepateted = await isNameRepeated(req.body.name);
+    if (isRepateted) {
+      return res.status(400).json({ error: 'Table name is already in use' });
+    }
+
     const table = await Table.create(req.body);
     return res.status(201).json({ table });
   } catch (error) {
@@ -56,6 +64,11 @@ const post = async (req, res) => {
 
 const put = async (req, res) => {
   try {
+    const isRepateted = await isNameRepeated(req.body.name);
+    if (isRepateted) {
+      return res.status(400).json({ error: 'Table name is already in use' });
+    }
+
     const { id } = req.params;
     const table = await Table.update({ ...req.body }, { where: { id: id } });
     if (table) {

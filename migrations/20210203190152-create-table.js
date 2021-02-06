@@ -10,7 +10,6 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        unique: true,
       },
       total: {
         type: Sequelize.FLOAT(10, 2),
