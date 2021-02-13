@@ -65,7 +65,7 @@ describe('Tables API', () => {
       const res = await request(app)
         .post('/api/tables')
         .send({ name: 'Andres' });
-      expect(res.statusCode).toEqual(500);
+      expect(res.statusCode).toEqual(400);
     });
   });
 
@@ -97,9 +97,9 @@ describe('Tables API', () => {
 
     it('should prevent updating a table with repeated name', async () => {
       const res = await request(app)
-        .put('/api/tables/1')
-        .send({ name: 'Facundo' });
-      expect(res.statusCode).toEqual(500);
+        .put('/api/tables/2')
+        .send({ name: 'Test' });
+      expect(res.statusCode).toEqual(400);
     });
 
     it('should mark a table as completed', async () => {
