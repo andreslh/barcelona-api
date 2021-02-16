@@ -4,20 +4,26 @@
     "password": "postgres",
     "database": "barcelona_development",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "accessTokenSecret": "barcelona.-.Secret.-.Katowice.dev",
+    "refreshTokenSecret": "barcelona.-.Refresh.-.Katowice.dev"
   },
   "test": {
     "username": "postgres",
     "password": "postgres",
     "database": "barcelona_test",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "accessTokenSecret": "barcelona.-.Secret.-.Katowice.test",
+    "refreshTokenSecret": "barcelona.-.Refresh.-.Katowice.test"
   },
   "production": {
     "username": "postgres",
     "password": "postgres",
     "database": "barcelona_production",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "accessTokenSecret": "barcelona.-.Secret.-.Katowice.prod",
+    "refreshTokenSecret": "barcelona.-.Refresh.-.Katowice.prod"
   }
 }
