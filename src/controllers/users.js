@@ -10,7 +10,7 @@ const {
 const { User } = require('../models');
 const { ROLES, isNotAdmin } = require('../auth/roles');
 
-const EXPIRATION_TIME = '20m';
+const EXPIRATION_TIME = '1d';
 
 const getAccessToken = (email, role) =>
   jwt.sign({ email, role }, config.accessTokenSecret, {
@@ -68,9 +68,10 @@ const login = async (req, res) => {
     res.json({
       accessToken,
       refreshToken,
+      role,
     });
   } else {
-    res.send('Email or password incorrect');
+    res.status(400).json({ message: 'Email or password incorrect' });
   }
 };
 

@@ -1,8 +1,6 @@
 let refreshTokens = [];
 
-const isRefreshTokenInvalid = (token) => {
-  return refreshTokens.includes(token);
-};
+const isRefreshTokenInvalid = (token) => !refreshTokens.includes(token);
 
 const addRefreshToken = (token) => {
   refreshTokens.push(token);

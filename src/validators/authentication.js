@@ -8,9 +8,9 @@ const authenticateJWT = (req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(' ')[1];
 
-    jwt.verify(token, config.accessTokenSecret, (err, user) => {
-      if (err) {
-        return res.sendStatus(403);
+    jwt.verify(token, config.accessTokenSecret, (error, user) => {
+      if (error) {
+        return res.status(401).json({ message: error.name });
       }
 
       req.user = user;
