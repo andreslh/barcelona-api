@@ -4,6 +4,7 @@ const categoriesValidations = require('./categories');
 const subcategoriesValidations = require('./subcategories');
 const productsValidations = require('./products');
 const tablesValidations = require('./tables');
+const waitersValidations = require('./waiters');
 
 const validate = (req, res, next) => {
   const errors = validationResult(req);
@@ -23,5 +24,6 @@ module.exports = {
   subcategoriesValidations,
   productsValidations,
   tablesValidations,
+  waitersValidations,
   validate,
 };

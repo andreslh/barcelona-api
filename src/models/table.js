@@ -19,12 +19,25 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
+      waiterId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Waiter',
+          key: 'id',
+          as: 'waiterId',
+        },
+      },
     },
     {}
   );
   Table.associate = function (models) {
     Table.hasMany(models.Tableproduct, {
       foreignKey: 'tableId',
+    });
+    Table.belongsTo(models.Waiter, {
+      foreignKey: 'waiterId',
+      onDelete: 'CASCADE',
     });
   };
   return Table;
