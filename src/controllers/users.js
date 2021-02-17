@@ -42,8 +42,6 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: 'Email is already in use' });
     }
 
-    console.log('aca');
-
     const user = await User.create({
       email,
       password: getHashedPassword(password),
