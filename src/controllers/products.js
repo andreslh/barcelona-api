@@ -35,7 +35,7 @@ const getList = async (req, res) => {
 const getById = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findOne({ where: { id: id } });
+    const product = await Product.findOne({ where: { id } });
     if (product) {
       return res.status(200).json({ product });
     }
@@ -65,10 +65,7 @@ const put = async (req, res) => {
     const { name, subcategoryId } = req.body;
     await validateNotRepeated({ name, subcategoryId, id });
 
-    const product = await Product.update(
-      { ...req.body },
-      { where: { id: id } }
-    );
+    const product = await Product.update({ ...req.body }, { where: { id } });
     if (product) {
       return res.sendStatus(200);
     }
@@ -81,7 +78,7 @@ const put = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await Product.destroy({ where: { id: id } });
+    const deleted = await Product.destroy({ where: { id } });
     if (deleted) {
       return res.status(204).send();
     }

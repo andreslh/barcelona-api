@@ -25,7 +25,7 @@ const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const subcategory = await Subcategory.findOne({
-      where: { id: id },
+      where: { id },
       include: [{ model: Product }],
     });
     if (subcategory) {
@@ -58,7 +58,7 @@ const put = async (req, res) => {
 
     const subcategory = await Subcategory.update(
       { ...req.body },
-      { where: { id: id } }
+      { where: { id } }
     );
     if (subcategory) {
       return res.sendStatus(200);
@@ -72,7 +72,7 @@ const put = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await Subcategory.destroy({ where: { id: id } });
+    const deleted = await Subcategory.destroy({ where: { id } });
     if (deleted) {
       return res.status(204).send();
     }

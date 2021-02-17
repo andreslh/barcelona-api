@@ -1,13 +1,16 @@
-let refreshTokens = [];
+const { Token } = require('../models');
 
-const isRefreshTokenInvalid = (token) => !refreshTokens.includes(token);
-
-const addRefreshToken = (token) => {
-  refreshTokens.push(token);
+const isRefreshTokenInvalid = async (token) => {
+  const exists = await Token.findOne({ where: { token } });
+  return !exists;
 };
 
-const removeRefreshToken = (token) => {
-  refreshTokens = refreshTokens.filter((t) => t !== token);
+const addRefreshToken = async (token) => {
+  await Token.create({ token });
+};
+
+const removeRefreshToken = async (token) => {
+  await Token.destroy({ where: { token } });
 };
 
 module.exports = {

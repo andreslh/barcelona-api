@@ -18,7 +18,7 @@ const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const table = await Table.findOne({
-      where: { id: id },
+      where: { id },
       include: [{ model: Tableproduct }],
     });
     if (table) {
@@ -73,7 +73,7 @@ const put = async (req, res) => {
     }
 
     const { id } = req.params;
-    const table = await Table.update({ ...req.body }, { where: { id: id } });
+    const table = await Table.update({ ...req.body }, { where: { id } });
     if (table) {
       return res.sendStatus(200);
     }
@@ -86,7 +86,7 @@ const put = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await Table.destroy({ where: { id: id } });
+    const deleted = await Table.destroy({ where: { id } });
     if (deleted) {
       return res.status(204).send();
     }
@@ -99,12 +99,9 @@ const remove = async (req, res) => {
 const complete = async (req, res) => {
   try {
     const { id } = req.params;
-    const [updated] = await Table.update(
-      { status: false },
-      { where: { id: id } }
-    );
+    const [updated] = await Table.update({ status: false }, { where: { id } });
     if (updated) {
-      const updatedTable = await Table.findOne({ where: { id: id } });
+      const updatedTable = await Table.findOne({ where: { id } });
       return res.status(200).json({ table: updatedTable });
     }
     throw new Error('Table not found');

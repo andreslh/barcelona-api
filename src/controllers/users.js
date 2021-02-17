@@ -63,7 +63,7 @@ const login = async (req, res) => {
     const { email, role } = user;
     const accessToken = getAccessToken(email, role);
     const refreshToken = getRefreshToken(email, role);
-    addRefreshToken(refreshToken);
+    await addRefreshToken(refreshToken);
 
     res.json({
       accessToken,
@@ -82,7 +82,8 @@ const token = async (req, res) => {
     return res.sendStatus(401);
   }
 
-  if (isRefreshTokenInvalid(token)) {
+  const isTokenInvalid = await isRefreshTokenInvalid(token);
+  if (isTokenInvalid) {
     return res.sendStatus(403);
   }
 
@@ -102,11 +103,12 @@ const token = async (req, res) => {
 const logout = async (req, res) => {
   const { token } = req.body;
 
-  if (isRefreshTokenInvalid(token)) {
-    return res.sendStatus(400);
+  const isTokenInvalid = await isRefreshTokenInvalid(token);
+  if (isTokenInvalid) {
+    return res.sendStatus(403);
   }
 
-  removeRefreshToken(token);
+  await removeRefreshToken(token);
   res.send('Logout successful');
 };
 
