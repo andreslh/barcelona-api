@@ -2,6 +2,9 @@ const { sequelize } = require('../models');
 
 const { Table, Tableproduct, Product } = require('../models');
 
+const REPEATED_ERROR_MESSAGE =
+  'Ya hay una mesa o pedido abierto con el nombre elegido';
+
 const get = async (req, res) => {
   try {
     const tables = await Table.findAll();
@@ -52,7 +55,7 @@ const post = async (req, res) => {
   try {
     const isRepateted = await isNameRepeated(req.body.name);
     if (isRepateted) {
-      return res.status(400).json({ error: 'Table name is already in use' });
+      return res.status(400).json({ message: REPEATED_ERROR_MESSAGE });
     }
 
     const table = await Table.create(req.body);
@@ -66,7 +69,7 @@ const put = async (req, res) => {
   try {
     const isRepateted = await isNameRepeated(req.body.name);
     if (isRepateted) {
-      return res.status(400).json({ error: 'Table name is already in use' });
+      return res.status(400).json({ message: REPEATED_ERROR_MESSAGE });
     }
 
     const { id } = req.params;
