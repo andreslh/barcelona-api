@@ -1,19 +1,31 @@
 const { Waiter, Table } = require('../models');
-const { validateNotRepeatedModel } = require('./validator');
+const { validateNotRepeatedModel, handleError } = require('./validator');
 
 const REPEATED_ERROR_MESSAGE = 'Ya existe un mozo con el nombre elegido';
 
 const validateNotRepeated = async (fields) =>
   await validateNotRepeatedModel(Waiter, fields, REPEATED_ERROR_MESSAGE);
 
-const handleError = (error, res) =>
-  error === REPEATED_ERROR_MESSAGE
-    ? res.status(400).json({ message: error })
-    : res.status(500).json({ message: error.message });
-
 const get = async (req, res) => {
   try {
     const waiters = await Waiter.findAll();
+    return res.status(200).json({ waiters });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+const getWaitersWithTables = async (req, res) => {
+  try {
+    const waiters = await Waiter.findAll({
+      order: [['id', 'ASC']],
+      include: {
+        model: Table,
+        where: {
+          status: true,
+        },
+      },
+    });
     return res.status(200).json({ waiters });
   } catch (error) {
     return res.status(500).send(error.message);
@@ -44,7 +56,7 @@ const post = async (req, res) => {
     const waiter = await Waiter.create(req.body);
     return res.status(201).json({ waiter });
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
   }
 };
 
@@ -60,7 +72,7 @@ const put = async (req, res) => {
     }
     throw new Error('Waiter not found');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
   }
 };
 
@@ -79,6 +91,7 @@ const remove = async (req, res) => {
 
 module.exports = {
   get,
+  getWaitersWithTables,
   getById,
   post,
   put,

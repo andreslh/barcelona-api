@@ -5,6 +5,7 @@ const { waitersValidations, validate } = require('../validators');
 const controller = require('../controllers/waiters');
 
 router.get('/', controller.get);
+router.get('/tables', controller.getWaitersWithTables);
 router.get('/:id', controller.getById);
 router.post('/', waitersValidations(), validate, controller.post);
 router.put('/:id', waitersValidations(), validate, controller.put);

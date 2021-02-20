@@ -1,16 +1,11 @@
 const { Subcategory, Product } = require('../models');
-const { validateNotRepeatedModel } = require('./validator');
+const { validateNotRepeatedModel, handleError } = require('./validator');
 
 const REPEATED_ERROR_MESSAGE =
   'Ya existe una subcategoria con el nombre elegido en esta categoría';
 
 const validateNotRepeated = async (fields) =>
   await validateNotRepeatedModel(Subcategory, fields, REPEATED_ERROR_MESSAGE);
-
-const handleError = (error, res) =>
-  error === REPEATED_ERROR_MESSAGE
-    ? res.status(400).json({ message: error })
-    : res.status(500).json({ message: error.message });
 
 const get = async (req, res) => {
   try {
@@ -46,7 +41,7 @@ const post = async (req, res) => {
     const subcategory = await Subcategory.create(req.body);
     return res.status(201).json({ subcategory });
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
   }
 };
 
@@ -65,7 +60,7 @@ const put = async (req, res) => {
     }
     throw new Error('Subcategory not found');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
   }
 };
 

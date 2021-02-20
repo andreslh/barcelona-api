@@ -1,16 +1,11 @@
 const { Category, Product } = require('../models');
-const { validateNotRepeatedModel } = require('./validator');
+const { validateNotRepeatedModel, handleError } = require('./validator');
 
 const REPEATED_ERROR_MESSAGE =
   'Ya existe un producto con el nombre elegido en esta subcategoría';
 
 const validateNotRepeated = async (fields) =>
   await validateNotRepeatedModel(Product, fields, REPEATED_ERROR_MESSAGE);
-
-const handleError = (error, res) =>
-  error === REPEATED_ERROR_MESSAGE
-    ? res.status(400).json({ message: error })
-    : res.status(500).json({ message: error.message });
 
 const get = async (req, res) => {
   try {
@@ -55,7 +50,7 @@ const post = async (req, res) => {
     const product = await Product.create(req.body);
     return res.status(201).json({ product });
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
   }
 };
 
@@ -71,7 +66,7 @@ const put = async (req, res) => {
     }
     throw new Error('Product not found');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
   }
 };
 

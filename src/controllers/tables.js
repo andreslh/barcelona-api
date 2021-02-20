@@ -1,9 +1,13 @@
 const { sequelize } = require('../models');
 
 const { Table, Tableproduct, Product } = require('../models');
+const { validateNotRepeatedModel, handleError } = require('./validator');
 
 const REPEATED_ERROR_MESSAGE =
   'Ya hay una mesa o pedido abierto con el nombre elegido';
+
+const validateNotRepeated = async (fields) =>
+  await validateNotRepeatedModel(Table, fields, REPEATED_ERROR_MESSAGE);
 
 const get = async (req, res) => {
   try {
@@ -48,38 +52,31 @@ const getCompleted = async (req, res) => {
   }
 };
 
-const isNameRepeated = async (name) =>
-  (await Table.findOne({ where: { name, status: true } })) ? true : false;
-
 const post = async (req, res) => {
   try {
-    const isRepateted = await isNameRepeated(req.body.name);
-    if (isRepateted) {
-      return res.status(400).json({ message: REPEATED_ERROR_MESSAGE });
-    }
+    const { name } = req.body;
+    await validateNotRepeated({ name, status: true });
 
     const table = await Table.create(req.body);
     return res.status(201).json({ table });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
   }
 };
 
 const put = async (req, res) => {
   try {
-    const isRepateted = await isNameRepeated(req.body.name);
-    if (isRepateted) {
-      return res.status(400).json({ message: REPEATED_ERROR_MESSAGE });
-    }
-
     const { id } = req.params;
+    const { name } = req.body;
+    await validateNotRepeated({ id, name, status: true });
+
     const table = await Table.update({ ...req.body }, { where: { id } });
     if (table) {
       return res.sendStatus(200);
     }
     throw new Error('Table not found');
   } catch (error) {
-    return res.status(500).send(error.message);
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
   }
 };
 

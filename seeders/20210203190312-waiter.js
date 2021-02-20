@@ -4,7 +4,7 @@ module.exports = {
       'Waiters',
       [
         {
-          name: 'Delivery',
+          name: 'Para entregar',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
