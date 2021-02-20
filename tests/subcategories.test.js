@@ -83,7 +83,7 @@ describe('Subcategories API', () => {
         .post('/api/subcategories')
         .set(...getTokenHeader(token))
         .send({ name: 'Pizzas', categoryId: 1 });
-      expect(res.statusCode).toEqual(500);
+      expect(res.statusCode).toEqual(400);
     });
 
     it('should prevent creating a new subcategory with invalid categoryId', async () => {
@@ -142,7 +142,7 @@ describe('Subcategories API', () => {
         .put('/api/subcategories/1')
         .set(...getTokenHeader(token))
         .send({ name: 'Burgers', categoryId: 1 });
-      expect(res.statusCode).toEqual(500);
+      expect(res.statusCode).toEqual(400);
     });
 
     it('should prevent updating a subcategory with invalid categoryId', async () => {

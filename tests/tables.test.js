@@ -16,7 +16,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.tables.length).toBe(2);
+      expect(res.body.tables.length).toBe(3);
       expect(res.body.tables[0].name).toBe('Andres');
       expect(res.body.tables[1].name).toBe('Facundo');
     });
@@ -55,7 +55,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.tables.length).toBe(1);
+      expect(res.body.tables.length).toBe(2);
       expect(res.body.tables[0].name).toBe('Facundo');
     });
   });
@@ -67,6 +67,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send({
           name: 'Test',
+          waiterId: 1,
         });
       expect(res.statusCode).toEqual(201);
       expect(res.body).toHaveProperty('table');
@@ -75,8 +76,8 @@ describe('Tables API', () => {
         .get('/api/tables')
         .set(...getTokenHeader(token))
         .send();
-      expect(getResponse.body.tables.length).toBe(3);
-      expect(getResponse.body.tables[2].name).toBe('Test');
+      expect(getResponse.body.tables.length).toBe(4);
+      expect(getResponse.body.tables[3].name).toBe('Test');
     });
 
     it('should prevent creating a new table with empty name', async () => {
@@ -147,9 +148,9 @@ describe('Tables API', () => {
 
     it('should prevent updating a table with repeated name', async () => {
       const res = await request(app)
-        .put('/api/tables/2')
+        .put('/api/tables/3')
         .set(...getTokenHeader(token))
-        .send({ name: 'Test' });
+        .send({ name: 'New name' });
       expect(res.statusCode).toEqual(400);
     });
 

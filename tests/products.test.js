@@ -92,7 +92,7 @@ describe('Products API', () => {
         .post('/api/products')
         .set(...getTokenHeader(token))
         .send({ name: 'Anana', subcategoryId: 1, price: 500 });
-      expect(res.statusCode).toEqual(500);
+      expect(res.statusCode).toEqual(400);
     });
 
     it('should prevent creating a new product with invalid subcategoryId', async () => {
@@ -160,7 +160,7 @@ describe('Products API', () => {
         .put('/api/products/1')
         .set(...getTokenHeader(token))
         .send({ name: 'Anana', subcategoryId: 1 });
-      expect(res.statusCode).toEqual(500);
+      expect(res.statusCode).toEqual(400);
     });
 
     it('should prevent updating a product with invalid subcategoryId', async () => {

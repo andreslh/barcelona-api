@@ -131,6 +131,11 @@ const changePassword = async (req, res) => {
     if (userUpdated) {
       return res.sendStatus(200);
     }
+    return res.sendStatus(500);
+  } else {
+    res
+      .status(400)
+      .json({ message: 'La contraseña actual ingresada es incorrecta' });
   }
 };
 

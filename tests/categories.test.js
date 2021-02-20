@@ -80,7 +80,7 @@ describe('Categories API', () => {
         .post('/api/categories')
         .set(...getTokenHeader(token))
         .send({ name: 'Comida' });
-      expect(res.statusCode).toEqual(500);
+      expect(res.statusCode).toEqual(400);
     });
   });
 
@@ -130,7 +130,7 @@ describe('Categories API', () => {
         .put('/api/categories/1')
         .set(...getTokenHeader(token))
         .send({ name: 'Bebida' });
-      expect(res.statusCode).toEqual(500);
+      expect(res.statusCode).toEqual(400);
     });
   });
 

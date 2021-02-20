@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Waiter, Table } = require('../models');
 const { validateNotRepeatedModel, handleError } = require('./validator');
 
@@ -8,7 +9,7 @@ const validateNotRepeated = async (fields) =>
 
 const get = async (req, res) => {
   try {
-    const waiters = await Waiter.findAll();
+    const waiters = await Waiter.findAll({ order: [['id', 'ASC']] });
     return res.status(200).json({ waiters });
   } catch (error) {
     return res.status(500).send(error.message);
