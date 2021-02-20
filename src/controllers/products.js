@@ -9,7 +9,7 @@ const validateNotRepeated = async (fields) =>
 
 const get = async (req, res) => {
   try {
-    const products = await Product.findAll();
+    const products = await Product.findAll({ order: [['id', 'ASC']] });
     return res.status(200).json({ products });
   } catch (error) {
     return res.status(500).send(error.message);
@@ -19,7 +19,7 @@ const get = async (req, res) => {
 const getList = async (req, res) => {
   try {
     const categories = await Category.findAll({
-      include: [{ all: true, nested: true }],
+      include: [{ all: true, nested: true, order: [['id', 'ASC']] }],
     });
     return res.status(200).json({ categories });
   } catch (error) {

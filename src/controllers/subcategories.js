@@ -9,7 +9,7 @@ const validateNotRepeated = async (fields) =>
 
 const get = async (req, res) => {
   try {
-    const subcategories = await Subcategory.findAll();
+    const subcategories = await Subcategory.findAll({ order: [['id', 'ASC']] });
     return res.status(200).json({ subcategories });
   } catch (error) {
     return res.status(500).send(error.message);
