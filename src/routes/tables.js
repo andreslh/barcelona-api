@@ -6,6 +6,7 @@ const controller = require('../controllers/tables');
 
 router.get('/', controller.get);
 router.get('/open', controller.getOpen);
+router.post('/closed', controller.getClosed);
 router.get('/completed', controller.getCompleted);
 router.get('/:id', controller.getById);
 router.post('/', tablesValidations(), validate, controller.post);

@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { sequelize } = require('../models');
 
 const { Table, Tableproduct, Product } = require('../models');
@@ -5,6 +6,8 @@ const { validateNotRepeatedModel, handleError } = require('./validator');
 
 const REPEATED_ERROR_MESSAGE =
   'Ya hay una mesa o pedido abierto con el nombre elegido';
+
+const ORDER_TYPE_MAX = 2;
 
 const validateNotRepeated = async (fields) =>
   await validateNotRepeatedModel(Table, fields, REPEATED_ERROR_MESSAGE);
@@ -37,6 +40,47 @@ const getById = async (req, res) => {
 const getOpen = async (req, res) => {
   try {
     const tables = await Table.findAll({ where: { status: true } });
+    return res.status(200).json({ tables });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+const getClosed = async (req, res) => {
+  try {
+    const { startDate, endDate, type } = req.body;
+    const createdAt = [
+      sequelize.where(
+        sequelize.fn('date', sequelize.col('createdAt')),
+        '>=',
+        startDate
+      ),
+      sequelize.where(
+        sequelize.fn('date', sequelize.col('createdAt')),
+        '<=',
+        endDate
+      ),
+    ];
+    const waiterId =
+      type === 'tables'
+        ? {
+            waiterId: {
+              [Op.gt]: ORDER_TYPE_MAX,
+            },
+          }
+        : {
+            waiterId: {
+              [Op.lte]: ORDER_TYPE_MAX,
+            },
+          };
+
+    const tables = await Table.findAll({
+      where: {
+        status: false,
+        [Op.and]: createdAt,
+        ...waiterId,
+      },
+    });
     return res.status(200).json({ tables });
   } catch (error) {
     return res.status(500).send(error.message);
@@ -180,6 +224,7 @@ module.exports = {
   get,
   getById,
   getOpen,
+  getClosed,
   getCompleted,
   post,
   put,
