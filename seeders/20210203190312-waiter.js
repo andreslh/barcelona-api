@@ -4,7 +4,7 @@ module.exports = {
       'Waiters',
       [
         {
-          name: 'Para entregar',
+          name: 'Delivery',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -15,6 +15,11 @@ module.exports = {
         },
         {
           name: 'Eduardo',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Nuevo mozo',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
