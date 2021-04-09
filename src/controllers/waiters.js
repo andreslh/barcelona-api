@@ -1,8 +1,10 @@
-const { Op } = require('sequelize');
 const { Waiter, Table } = require('../models');
 const { validateNotRepeatedModel, handleError } = require('./validator');
 
 const REPEATED_ERROR_MESSAGE = 'Ya existe un mozo con el nombre elegido';
+const WAITER_HAS_TABLES_ERROR =
+  'El mozo tiene mesas asignadas (abiertas o cerradas)';
+const WAITER_NOT_FOUND = 'Mozo no encontrado';
 
 const validateNotRepeated = async (fields) =>
   await validateNotRepeatedModel(Waiter, fields, REPEATED_ERROR_MESSAGE);
@@ -80,13 +82,23 @@ const put = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
+    const tables = await Table.findOne({
+      where: {
+        waiterId: id,
+      },
+    });
+
+    if (tables) {
+      throw new Error(WAITER_HAS_TABLES_ERROR);
+    }
+
     const deleted = await Waiter.destroy({ where: { id } });
     if (deleted) {
       return res.status(204).send();
     }
-    throw new Error('Waiter not found');
+    throw new Error(WAITER_NOT_FOUND);
   } catch (error) {
-    return res.status(500).send(error.message);
+    return handleError(error, res, { message: error });
   }
 };
 
