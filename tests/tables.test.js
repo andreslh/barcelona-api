@@ -16,9 +16,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.tables.length).toBe(3);
-      expect(res.body.tables[0].name).toBe('Andres');
-      expect(res.body.tables[1].name).toBe('Facundo');
+      expect(res.body.tables.length).toBe(32);
     });
 
     it('should retrieve a specific table', async () => {
@@ -32,7 +30,7 @@ describe('Tables API', () => {
 
     it('should send error message if requested id is invalid', async () => {
       const res = await request(app)
-        .get('/api/tables/15')
+        .get('/api/tables/157')
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(404);
@@ -45,8 +43,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.tables.length).toBe(1);
-      expect(res.body.tables[0].name).toBe('Andres');
+      expect(res.body.tables.length).toBe(21);
     });
 
     it('should retrieve all completed tables', async () => {
@@ -55,8 +52,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.tables.length).toBe(2);
-      expect(res.body.tables[0].name).toBe('Facundo');
+      expect(res.body.tables.length).toBe(11);
     });
   });
 
@@ -76,8 +72,8 @@ describe('Tables API', () => {
         .get('/api/tables')
         .set(...getTokenHeader(token))
         .send();
-      expect(getResponse.body.tables.length).toBe(4);
-      expect(getResponse.body.tables[3].name).toBe('Test');
+      expect(getResponse.body.tables.length).toBe(33);
+      expect(getResponse.body.tables[32].name).toBe('Test');
     });
 
     it('should prevent creating a new table with empty name', async () => {
@@ -172,7 +168,7 @@ describe('Tables API', () => {
   describe('Delete table', () => {
     it('should prevent deleting if id is invalid', async () => {
       const res = await request(app)
-        .delete('/api/tables/15')
+        .delete('/api/tables/157')
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(500);
