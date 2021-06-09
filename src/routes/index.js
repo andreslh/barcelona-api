@@ -14,6 +14,6 @@ apiRouter.use('/categories', authenticateJWT, categoriesRouter);
 apiRouter.use('/subcategories', authenticateJWT, subcategoriesRouter);
 apiRouter.use('/products', authenticateJWT, productsRouter);
 apiRouter.use('/users', usersRouter);
-apiRouter.use('/waiters', waitersRouter);
+apiRouter.use('/waiters', authenticateJWT, waitersRouter);
 
 module.exports = apiRouter;
