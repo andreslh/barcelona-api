@@ -139,10 +139,49 @@ const changePassword = async (req, res) => {
   }
 };
 
+const getByRole = async (req, res) => {
+  try {
+    const { role } = req.params;
+    const users = await User.findAll({
+      where: { role },
+    });
+    if (users) {
+      return res.status(200).json({ users });
+    }
+    return res.status(404).send('Users with the role does not exists');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { id, newPassword } = req.body;
+    const user = await User.findOne({
+      where: { id },
+    });
+    if (user) {
+      const userUpdated = await User.update(
+        { password: getHashedPassword(newPassword) },
+        { where: { id } }
+      );
+      if (userUpdated) {
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(500);
+    }
+    return res.status(404).send('Users with the id does not exists');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   signup,
   login,
   token,
   logout,
   changePassword,
+  getByRole,
+  resetPassword,
 };

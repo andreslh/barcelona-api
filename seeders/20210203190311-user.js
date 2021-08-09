@@ -4,9 +4,9 @@ module.exports = {
       'Users',
       [
         {
-          email: 'andreslh90@gmail.com',
+          email: 'admin@admin.com',
           password:
-            '$2b$10$.v1Khw9cJqEcQ6MTdnPSmuPecoMZcNlG5hjCOmE3O9cplwlY8ZFRG',
+            '$2b$10$8aKJ..HiCoOnVP6BvcnrIOD.vg1wl429cDjjtrbFFnkI3RpQqy02O',
           role: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
