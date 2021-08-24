@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       quantity: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT(10, 2)
       },
       price: {
         type: Sequelize.FLOAT(10, 2),

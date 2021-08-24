@@ -1,5 +1,10 @@
 const { Table, Tableproduct, Product } = require('../../models');
 
+const roundDecimals = (price) => {
+  const priceString = price.toString();
+  return priceString.slice(0, (priceString.indexOf(".")) + 3);
+}
+
 const addProducts = async (req, res) => {
   const { id } = req.params;
   const tableId = parseInt(id, 10);
@@ -11,7 +16,7 @@ const addProducts = async (req, res) => {
     const tableProducts = await Tableproduct.bulkCreate(
       await Promise.all(
         req.body.map(async (tableProduct) => {
-          const quantity = parseInt(tableProduct.quantity, 10);
+          const quantity = tableProduct.quantity;
           const product = await Product.findOne({
             where: { id: tableProduct.id },
           });
@@ -24,7 +29,7 @@ const addProducts = async (req, res) => {
             quantity,
             tableId,
             price: product.price,
-            total: product.price * quantity,
+            total: roundDecimals(product.price * quantity),
           };
         })
       )

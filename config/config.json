@@ -8,6 +8,15 @@
     "accessTokenSecret": "barcelona.-.Secret.-.Katowice.dev",
     "refreshTokenSecret": "barcelona.-.Refresh.-.Katowice.dev"
   },
+  "development_online": {
+    "username": "u299482682_barcelona",
+    "password": "Facundo123@",
+    "database": "u299482682_barcelona",
+    "host": "sql130.main-hosting.eu",
+    "dialect": "mysql",
+    "accessTokenSecret": "barcelona.-.Secret.-.Katowice.dev",
+    "refreshTokenSecret": "barcelona.-.Refresh.-.Katowice.dev"
+  },
   "test": {
     "username": "postgres",
     "password": "postgres",

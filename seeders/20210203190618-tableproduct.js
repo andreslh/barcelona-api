@@ -15,7 +15,7 @@ module.exports = {
         },
         {
           productId: 2,
-          quantity: 1,
+          quantity: 0.5,
           tableId: 2,
           name: 'Anana',
           price: 300,

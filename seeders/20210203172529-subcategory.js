@@ -6,12 +6,14 @@ module.exports = {
         {
           name: 'Pizzas',
           categoryId: 1,
+          allowHalf: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           name: 'Burgers',
           categoryId: 1,
+          allowHalf: false,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

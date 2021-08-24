@@ -12,6 +12,9 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true,
       },
+      allowHalf: {
+        type: Sequelize.BOOLEAN,
+      },
       categoryId: {
         type: Sequelize.INTEGER,
       },
