@@ -29,13 +29,13 @@ const addProducts = async (req, res) => {
             quantity,
             tableId,
             price: product.price,
-            total: roundDecimals(product.price * quantity),
+            total: parseFloat(product.price * quantity).toFixed(2),
           };
         })
       )
     );
 
-    await Table.update({ total: updatedTotal }, { where: { id } });
+    await Table.update({ total: parseFloat(updatedTotal).toFixed(2) }, { where: { id } });
     res.send(tableProducts);
   } catch (error) {
     return res.status(500).send(error.message);
