@@ -155,6 +155,22 @@ module.exports = {
           createdAt: new Date('2021-02-03T17:01:00.000Z'),
           updatedAt: new Date('2021-02-03T17:01:00.000Z'),
         },
+        {
+          name: 'Julieta5',
+          total: 510,
+          status: false,
+          waiterId: 1,
+          createdAt: new Date('2021-02-03T02:00:00.000Z'),
+          updatedAt: new Date('2021-02-03T02:00:00.000Z'),
+        },
+        {
+          name: 'Julieta 6',
+          total: 510,
+          status: false,
+          waiterId: 1,
+          createdAt: new Date('2021-02-03T17:01:00.000Z'),
+          updatedAt: new Date('2021-02-03T17:01:00.000Z'),
+        },
       ],
       {}
     );

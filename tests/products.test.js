@@ -17,7 +17,7 @@ describe('Products API', () => {
         .send();
       expect(res.statusCode).toEqual(200);
       expect(res.body.products.length).toBe(3);
-      expect(res.body.products[0].name).toBe('IPA');
+      expect(res.body.products[0].name).toBe('Completa');
       expect(res.body.products[1].name).toBe('Anana');
       expect(res.body.products[2].name).toBe('Roquefort');
     });
@@ -28,7 +28,7 @@ describe('Products API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.product.name).toBe('IPA');
+      expect(res.body.product.name).toBe('Completa');
     });
 
     it('should send error message if requested id is invalid', async () => {

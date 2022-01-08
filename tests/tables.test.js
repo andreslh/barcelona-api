@@ -16,7 +16,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.tables.length).toBe(32);
+      expect(res.body.tables.length).toBe(21);
     });
 
     it('should retrieve a specific table', async () => {
@@ -43,7 +43,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.tables.length).toBe(21);
+      expect(res.body.tables.length).toBe(19);
     });
 
     it('should retrieve all completed tables', async () => {
@@ -52,7 +52,7 @@ describe('Tables API', () => {
         .set(...getTokenHeader(token))
         .send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.tables.length).toBe(11);
+      expect(res.body.tables.length).toBe(2);
     });
   });
 
@@ -72,8 +72,8 @@ describe('Tables API', () => {
         .get('/api/tables')
         .set(...getTokenHeader(token))
         .send();
-      expect(getResponse.body.tables.length).toBe(33);
-      expect(getResponse.body.tables[32].name).toBe('Test');
+      expect(getResponse.body.tables.length).toBe(22);
+      expect(getResponse.body.tables[21].name).toBe('Test');
     });
 
     it('should prevent creating a new table with empty name', async () => {

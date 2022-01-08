@@ -15,6 +15,7 @@ describe('Categories API', () => {
         .get('/api/categories')
         .set(...getTokenHeader(token))
         .send();
+        console.log(res);
       expect(res.statusCode).toEqual(200);
       expect(res.body.categories.length).toBe(2);
       expect(res.body.categories[0].name).toBe('Comida');

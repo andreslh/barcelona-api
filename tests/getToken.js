@@ -3,8 +3,8 @@ const app = require('../src/app.js');
 
 const getToken = async () => {
   const authResponse = await request(app).post('/api/users/login').send({
-    email: 'andreslh90@gmail.com',
-    password: 'mypassword',
+    email: 'admin@admin.com',
+    password: 'admin',
   });
   return authResponse.body.accessToken;
 };
