@@ -4,7 +4,7 @@ module.exports = {
       'Products',
       [
         {
-          name: 'IPA',
+          name: 'Completa',
           subcategoryId: 2,
           price: 210,
           createdAt: new Date(),

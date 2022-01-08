@@ -27,7 +27,7 @@ module.exports = {
           productId: 1,
           quantity: 1,
           tableId: 1,
-          name: 'IPA',
+          name: 'Completa',
           price: 210,
           total: 210,
           createdAt: new Date(),
