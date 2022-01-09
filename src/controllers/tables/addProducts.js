@@ -1,4 +1,4 @@
-const { Table, Tableproduct, Product } = require('../../models');
+const { Table, Tableproduct, Product, Subcategory } = require('../../models');
 
 const roundDecimals = (price) => {
   const priceString = price.toString();
@@ -20,12 +20,15 @@ const addProducts = async (req, res) => {
           const product = await Product.findOne({
             where: { id: tableProduct.id },
           });
+          const subcategory = await Subcategory.findOne({
+            where: { id: product.subcategoryId },
+          })
           const productTotal = product.price * quantity;
           updatedTotal += productTotal;
 
           return {
             productId: tableProduct.id,
-            name: product.name,
+            name: `${subcategory.name} - ${product.name}`,
             quantity,
             tableId,
             price: product.price,
