@@ -70,6 +70,24 @@ const put = async (req, res) => {
   }
 };
 
+const putList = async (req, res) => {
+  try {
+    const { categories } = req.body;
+    categories.forEach((category) => {
+      category.Subcategories.forEach((subcategory) => {
+        subcategory.Products.forEach(async (product) => {
+          await validateNotRepeated({ name: product.name, subcategoryId: subcategory.id, id: product.id });
+
+          const updated = await Product.update({ name: product.name, price: product.price }, { where: { id: product.id } });
+        });
+      });
+    });
+    return res.sendStatus(200);
+  } catch (error) {
+    return handleError(error, res, REPEATED_ERROR_MESSAGE);
+  }
+};
+
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
@@ -89,5 +107,6 @@ module.exports = {
   getById,
   post,
   put,
+  putList,
   remove,
 };

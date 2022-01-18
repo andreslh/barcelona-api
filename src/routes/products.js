@@ -9,6 +9,7 @@ router.get('/', controller.get);
 router.get('/list', controller.getList);
 router.get('/:id', controller.getById);
 router.post('/', isAdmin, productsValidations(), validate, controller.post);
+router.put('/list', isAdmin, controller.putList);
 router.put('/:id', isAdmin, productsValidations(), validate, controller.put);
 router.delete('/:id', isAdmin, controller.remove);
 
