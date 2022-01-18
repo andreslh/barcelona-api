@@ -10,7 +10,7 @@
     "db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:create",
     "start": "nodemon src/index.js",
     "start:online": "cross-env NODE_ENV=development_online nodemon src/index.js",
-    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --debug",
     "db:reset:online": "cross-env NODE_ENV=development_online npx sequelize-cli db:drop && cross-env NODE_ENV=development_online npx sequelize-cli db:create && cross-env NODE_ENV=development_online npx sequelize-cli db:migrate && cross-env NODE_ENV=development_online npx sequelize-cli db:seed:all"
   },
   "keywords": [],

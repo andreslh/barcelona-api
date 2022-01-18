@@ -4,12 +4,12 @@ module.exports = {
       'Categories',
       [
         {
-          name: 'Comida',
+          name: 'Comidas',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'Bebida',
+          name: 'Bebidas',
           createdAt: new Date(),
           updatedAt: new Date(),
         },

@@ -1,4 +1,4 @@
-const { Category, Product } = require('../models');
+const { Category, Subcategory, Product } = require('../models');
 const { validateNotRepeatedModel, handleError } = require('./validator');
 
 const REPEATED_ERROR_MESSAGE =
@@ -19,7 +19,16 @@ const get = async (req, res) => {
 const getList = async (req, res) => {
   try {
     const categories = await Category.findAll({
-      include: [{ all: true, nested: true, order: [['id', 'ASC']] }],
+      order: [
+        ['id', 'ASC'], 
+        [
+          { model: Subcategory }, 
+          { model: Product }, 'id', 'ASC'
+        ]
+      ],
+      include:[
+        { model: Subcategory, include: [ { model: Product } ] }
+      ],
     });
     return res.status(200).json({ categories });
   } catch (error) {
